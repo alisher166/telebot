@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        #main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        img {
+            width: 150px;
+            height: auto;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 15px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button, #buy {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .button:hover, #buy:hover {
+            background-color: #0056b3;
+            color: #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Онлайн Магазин</h1>
+        <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="Магазин">
+        <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing</a> elit. <a href="#">Accusantium</a> ipsum magni, molestias.</p>
+        <button id="buy">Купить</button>
+    </div>
+    <form id="form" style="display:none;">
+        <input type="text" placeholder="Имя" id="user_name">
+        <input type="text" placeholder="Email" id="user_email">
+        <input type="text" placeholder="Телефон" id="user_phone">
+        <div id="error"></div>
+        <button type="button" id="order">Оформить заказ</button>
+    </form>
+
+    <div style="text-align: center;">
+        <button class="button">Hover me!</button>
+        <button class="button">Hover me too!</button>
+        <br>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        document.getElementById("buy").addEventListener("click", () => {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("form").style.display = "block";
+            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+        });
+
+        document.getElementById("order").addEventListener("click", () => {
+            document.getElementById("error").innerText = '';
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+
+            if (name.length < 5) {
+                document.getElementById("error").innerText = 'Ошибка в имени';
+                return;
+            }
+            if (email.length < 5) {
+                document.getElementById("error").innerText = 'Ошибка в Email';
+                return;
+            }
+            if (phone.length < 5) {
+                document.getElementById("error").innerText = 'Ошибка в номере телефона';
+                return;
+            }
+
+            let data = {
+                name: name,
+                email: email,
+                phone: phone
+            };
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
