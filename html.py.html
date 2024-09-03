@@ -2,61 +2,157 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Shop</title>
+    <meta name="description" content="Онлайн Магазин - Купите лучшие товары прямо сейчас!">
+    <meta name="keywords" content="магазин, покупки, онлайн, товары">
+    <meta name="author" content="Your Name">
+    <title>Онлайн Магазин</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #444;
+            margin: 0;
+            padding: 0;
             transition: background-color 0.5s ease, color 0.5s ease;
-            background-color: #f0f0f0;
-            color: #333;
         }
 
         .dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
+            background-color: #1e1e1e;
+            color: #f9f9f9;
         }
 
-        #main {
-            text-align: center;
+        #main, #form {
+            max-width: 90%;
+            width: 400px;
+            margin: 50px auto;
             padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #main:hover, #form:hover {
+            transform: scale(1.03);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff;
         }
 
         img {
-            width: 150px;
+            max-width: 100%;
             height: auto;
+            margin-bottom: 20px;
         }
 
         p {
             font-size: 16px;
-            margin: 15px 0;
+            line-height: 1.6;
         }
 
         a {
             color: #007bff;
             text-decoration: none;
+            font-weight: bold;
         }
 
         a:hover {
             text-decoration: underline;
         }
 
-        .button, #buy {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
+        .button, #buy, #order {
+            padding: 10px 25px;
+            margin: 15px 0;
             border: none;
             background-color: #007bff;
             color: white;
-            text-align: center;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
         }
 
-        .button:hover, #buy:hover {
-            background-color: #0056b3;
-            color: #e2e2e2;
+        .button:hover, #buy:hover, #order:hover {
+            background-color: black;
+            color: white;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .dark-mode input[type="text"] {
+            background-color: #333;
+            color: #f9f9f9;
+            border-color: #555;
+        }
+
+        .dark-mode input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        .toggle-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .toggle-button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background-color: #444;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        #success {
+            color: green;
+            margin-top: 10px;
+        }
+
+        #error, #success {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Анимация для формы */
+        #form {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -67,19 +163,18 @@
         <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing</a> elit. <a href="#">Accusantium</a> ipsum magni, molestias.</p>
         <button id="buy">Купить</button>
     </div>
+
     <form id="form" style="display:none;">
-        <input type="text" placeholder="Имя" id="user_name">
-        <input type="text" placeholder="Email" id="user_email">
-        <input type="text" placeholder="Телефон" id="user_phone">
+        <input type="text" placeholder="Имя" id="user_name" aria-label="Имя">
+        <input type="text" placeholder="Email" id="user_email" aria-label="Email">
+        <input type="text" placeholder="Телефон" id="user_phone" aria-label="Телефон">
         <div id="error"></div>
+        <div id="success"></div>
         <button type="button" id="order">Оформить заказ</button>
     </form>
 
-    <div style="text-align: center;">
-        <button class="button">Hover me!</button>
-        <button class="button">Hover me too!</button>
-        <br>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <div class="toggle-container">
+        <button onclick="toggleDarkMode()" class="toggle-button">Toggle Dark Mode</button>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -95,20 +190,22 @@
 
         document.getElementById("order").addEventListener("click", () => {
             document.getElementById("error").innerText = '';
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
+            document.getElementById("success").innerText = '';
+
+            let name = document.getElementById("user_name").value.trim();
+            let email = document.getElementById("user_email").value.trim();
+            let phone = document.getElementById("user_phone").value.trim();
 
             if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ошибка в имени';
+                document.getElementById("error").innerText = 'Ошибка в имени. Должно быть не менее 5 символов.';
                 return;
             }
-            if (email.length < 5) {
-                document.getElementById("error").innerText = 'Ошибка в Email';
+            if (!validateEmail(email)) {
+                document.getElementById("error").innerText = 'Ошибка в Email. Пожалуйста, введите корректный адрес.';
                 return;
             }
             if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ошибка в номере телефона';
+                document.getElementById("error").innerText = 'Ошибка в номере телефона. Должно быть не менее 5 символов.';
                 return;
             }
 
@@ -118,8 +215,14 @@
                 phone: phone
             };
             tg.sendData(JSON.stringify(data));
+            document.getElementById("success").innerText = 'Ваш заказ успешно оформлен!';
             tg.close();
         });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
